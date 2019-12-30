@@ -88,29 +88,8 @@ const updateUI = async () => {
     try{
       const allData = await request.json();
       console.log(allData);
-    
 
-
-      for (let i = 0; i < allData.length; i++) {
-    //     let end = allData.length;
- 
-    //     if (i === end) {
-    //     //display date
-    //         document.getElementById('date').innerHTML = 'On ' + revData[0].date + ' at ' + revData[0].time;
-
-    //         document.getElementById('city').innerHTML = 'in ' + revData[0].city + ',';
-
-    //         //convert and display temp
-    //         const farTemp = (revData[0].temp - 273.15) * 9/5 + 32;
-    //         const roundTemp = Math.round(farTemp);
-    //         document.getElementById('temp').innerHTML = 'It was ' + roundTemp + '&deg with ';
-
-    //         //display description
-    //         document.getElementById('desc').innerHTML = revData[0].desc;
-
-    //         document.getElementById('content').innerHTML = revData[0].feelings;
-    //     }
-    //   else{
+      for (let i = allData.length - 1; i > 0; i--) {
        
             let oldEntry = document.createElement('div');
             let oldTitle = document.createElement('h3');
@@ -124,16 +103,17 @@ const updateUI = async () => {
             let roundTemp = Math.round(farTemp);
             oldTitle.innerHTML = allData[i].date + ' at ' + allData[i].time + ' -> It was ' + roundTemp + '&deg in ' + allData[i].city + ', with ' + allData[i].desc;
 
+            document.getElementById('entry-logs').append(oldTitle);           
             document.getElementById('entry-logs').append(oldEntry);
-            document.getElementById('entry-logs').append(oldTitle);
+
          
             oldContent.setAttribute('class', 'prev-content');
-            oldContent.innerHTML = '<p>' + allData[i].feelings + '</p>';
+            oldContent.innerHTML = allData[i].feelings;
 
             oldEntry.append(oldContent);
 
         }
-    //  }
+
         return allData;
     }catch(error){
       console.log("error", error);

@@ -1,36 +1,51 @@
 body{
-    background: #fffff8;
+    background: #f23557;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 #app{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
-    height:100vh;
     background: #f23557;
     color: #f0d43a;
     justify-content: center;
     grid-gap: 1em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
+    width: 100%;
+    height: 100%;
 }
 
 .container{
     display:flex;
     flex-wrap: wrap;
+    max-width: 1054px;
 }
 
-.form-entry{
-    width: 50%;
+h1{
+    text-align: center;
 }
 
-.results{
-    width: 50%;
+@media screen and (max-width: 801px){
+    .form-entry{
+        width: 99%;
+        padding: 1%;
+    }
+    
+    .log-area{
+        width: 99%;
+        padding: 1%;
+    }
 }
 
-.log-area{
-    width: 50%;
+@media screen and (min-width: 801px){
+    .form-entry{
+        width: 48%;
+        padding: 1%;
+    }
+
+    .log-area{
+        width: 48%;
+        padding: 1%;
+    }
 }
 
 
@@ -38,27 +53,16 @@ body{
     background: rgba(59, 74, 107, .4);
 }
 
-#entryHolder{
-
+.prev-title{
+    padding-top: 6%;
 }
 
-#date{
-
+.myInput{
+    width: 100%;
 }
 
-#temp{
-
-}
-
-#content{
-
-}
-
-.headline {
-
-}
-.title{
-
+#zip{
+    width: 100%;
 }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
@@ -79,7 +83,7 @@ input{
 }
 
 button{
-    width: 400px;
+    width: 100%;
     height: 100px;
     background: #3b4a6b;
     color: #f0d43a;
