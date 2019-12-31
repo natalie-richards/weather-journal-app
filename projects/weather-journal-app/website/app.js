@@ -6,42 +6,12 @@ let newDate = (d.getMonth() + 1) +'/'+ d.getDate()+'/'+ d.getFullYear();
 let newTime = d.getHours()+':'+ d.getMinutes();
 
 
-
 let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
 
 let apiKey = '&APPID=bbee3673552ca695c2b8fa655569a66d';
 
 
 
-document.getElementById('generate').addEventListener('click', performAction);
-
-    function performAction(e){
-        const newZip =  document.getElementById('zip').value;
-        let zip = newZip + ',us';
-
-        const feeling = document.getElementById('feelings').value;
-
-        getEntry(baseURL, zip, apiKey)
-
-        .then(function(data){
-
-            postData('/add', {  temp: data.main.temp, 
-                                desc: data.weather[0].description,
-                                city: data.name,
-                                feelings: feeling,
-                                date: newDate,
-                                time: newTime
-
-                            }                                
-                    );
-          })
-          .then(
-            setTimeout(function(){
-            updateUI()
-    }, 2000)
-          )
-          
-    }
 
 //this works
 const getEntry = async (baseURL, zip, key)=>{
@@ -89,7 +59,11 @@ const updateUI = async () => {
       const allData = await request.json();
       console.log(allData);
 
+      document.getElementById('entry-logs').innerHTML = "";
+
       for (let i = allData.length - 1; i > 0; i--) {
+
+        // let i = allData.length - 1;
        
             let oldEntry = document.createElement('div');
             let oldTitle = document.createElement('h3');
@@ -120,3 +94,72 @@ const updateUI = async () => {
     }
   }
   
+
+  document.getElementById('generate').addEventListener('click', performAction);
+
+  function performAction(e){
+      const newZip =  document.getElementById('zip').value;
+      let zip = newZip + ',us';
+
+      const feeling = document.getElementById('feelings').value;
+
+      getEntry(baseURL, zip, apiKey)
+
+      .then(function(data){
+
+          postData('/add', {  temp: data.main.temp, 
+                              desc: data.weather[0].description,
+                              city: data.name,
+                              feelings: feeling,
+                              date: newDate,
+                              time: newTime
+
+                          }                                
+                  );
+        })
+        .then(
+          setTimeout(function(){
+          updateUI()
+  }, 2000)
+        )
+        
+  }
+
+//   document.getElementById('showall').addEventListener('click', showAll);
+
+//   function showAll()  {
+//     const allProjectData =  fetch('/all');
+
+
+//         for (let i = 0; i < allProjectData.length; i++) {
+//             let entryContainer = document.createElement('div');
+//             entryContainer.setAttribute('class', 'all-entry-container');
+
+//             let entry = document.createElement('div');
+//             entry.setAttribute('class', 'all-entry-box');
+
+//             let oldTitle = document.createElement('h3');
+//             let oldContent = document.createElement('p'); 
+
+//             let farTemp = (allProjectData[i].temp - 273.15) * 9/5 + 32;
+//             let roundTemp = Math.round(farTemp);
+//             oldTitle.innerHTML = allProjectData[i].date + ' at ' + allProjectData[i].time + ' -> It was ' + roundTemp + '&deg in ' + allProjectData[i].city + ', with ' + allProjectData[i].desc;
+
+
+//             document.getElementById('all-entry-container').append(entry);
+//             entry.append(oldTitle);
+//             entry.append(oldContent);
+            
+       
+
+         
+//             oldContent.setAttribute('class', 'prev-content');
+//             oldContent.innerHTML = allProjectData[i].feelings;
+
+//             oldEntry.append(oldContent);
+
+//         }
+
+    
+//     return allProjectData;
+// }
