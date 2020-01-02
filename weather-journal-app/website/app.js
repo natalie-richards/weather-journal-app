@@ -57,6 +57,8 @@ const updateUI = async () => {
       const allData = await request.json();
       console.log(allData);
 
+      document.getElementById('entry-logs').innerHTML = "";
+
       for (let i = allData.length - 1; i >= 0; i--) {
        
             let oldEntry = document.createElement('div');
