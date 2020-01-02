@@ -11,9 +11,7 @@ let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
 let apiKey = '&APPID=bbee3673552ca695c2b8fa655569a66d';
 
 
-
-
-//this works
+//get API data
 const getEntry = async (baseURL, zip, key)=>{
 
     const res = await fetch(baseURL+zip+key)
@@ -31,7 +29,7 @@ const getEntry = async (baseURL, zip, key)=>{
 };
 
 
-
+//store the api data
 const postData = async ( url = '', data = {})=>{
 
     const response = await fetch(url, {
@@ -52,18 +50,14 @@ const postData = async ( url = '', data = {})=>{
 
 
 
-//get request is off timing. returning blank on first call while post returns first entry
+//update page content with recent entries
 const updateUI = async () => {
     const request = await fetch('/all');
     try{
       const allData = await request.json();
       console.log(allData);
 
-      document.getElementById('entry-logs').innerHTML = "";
-
-      for (let i = allData.length - 1; i > 0; i--) {
-
-        // let i = allData.length - 1;
+      for (let i = allData.length - 1; i >= 0; i--) {
        
             let oldEntry = document.createElement('div');
             let oldTitle = document.createElement('h3');
@@ -75,7 +69,7 @@ const updateUI = async () => {
 
             let farTemp = (allData[i].temp - 273.15) * 9/5 + 32;
             let roundTemp = Math.round(farTemp);
-            oldTitle.innerHTML = allData[i].date + ' at ' + allData[i].time + ' -> It was ' + roundTemp + '&deg in ' + allData[i].city + ', with ' + allData[i].desc;
+            oldTitle.innerHTML = allData[i].date + ' at ' + allData[i].time + ' -> It was ' + roundTemp + '&deg in ' + allData[i].name + ', with ' + allData[i].desc;
 
             document.getElementById('entry-logs').append(oldTitle);           
             document.getElementById('entry-logs').append(oldEntry);
@@ -109,7 +103,7 @@ const updateUI = async () => {
 
           postData('/add', {  temp: data.main.temp, 
                               desc: data.weather[0].description,
-                              city: data.name,
+                              name: data.name,
                               feelings: feeling,
                               date: newDate,
                               time: newTime
@@ -117,10 +111,10 @@ const updateUI = async () => {
                           }                                
                   );
         })
-        .then(
-          setTimeout(function(){
+        .then(function(data){
+            
           updateUI()
-  }, 2000)
+            }
         )
         
   }

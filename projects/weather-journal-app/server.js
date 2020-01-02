@@ -44,24 +44,17 @@ app.get('/getProjectData', function (req, res) {
 
 const weatherData = [];
 
-//get request is off timing. returning blank on first call while post returns first entry
-  app.get('/all', getData) 
-  function getData (req, res){
-    res.send(weatherData);
-    console.log(weatherData);
-  }
 
-
-  //post route adds entry - worls
+  //post route adds entry 
 
 app.post('/add', addEntry);
 
   function addEntry(req,res){
-//   console.log(req.body);
+
     newEntry = {
+      name: req.body.name,
       temp: req.body.temp,
       desc: req.body.desc,
-      city: req.body.city,
       feelings: req.body.feelings,
       date: req.body.date,
       time: req.body.time
@@ -72,3 +65,10 @@ app.post('/add', addEntry);
     // console.log(weatherData);
   }
 
+
+//get request 
+app.get('/all', getData) 
+function getData (req, res){
+  res.send(weatherData);
+  console.log(weatherData);
+}
